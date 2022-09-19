@@ -28,6 +28,6 @@ jobs:
           sudo docker login -u $Docker_User -p $Docker_Pass
       - name: push docker image to private repo in docker hub
         run: |
-          sudo docker push dockkcodewqrkd/python-calc-image/app-calc
+          sudo docker push dockkcodewqrkd/python-calc-image
 
    
