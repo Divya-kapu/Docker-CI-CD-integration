@@ -28,6 +28,6 @@ jobs:
          docker image build . -t dockkcodewqrkd/python-calc-image/app-calc
       - name: push docker image to private repo in docker hub
         run: |
-          docker push dockkcodewqrkd/python-calc-image/app-calc
+          sudo docker push dockkcodewqrkd/python-calc-image/app-calc
 
    
