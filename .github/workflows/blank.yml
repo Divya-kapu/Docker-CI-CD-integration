@@ -16,5 +16,8 @@ jobs:
       - name: docker build python 
         run: |
          docker image build . -t localhost:5000/app-calc
+      - name: push docker image to private repo
+        run: |
+          docker push https://hub.docker.com/repository/docker/dockkcodewqrkd/python-calc-image/localhost:5000/app-calc
 
    
