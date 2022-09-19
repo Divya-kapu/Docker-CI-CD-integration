@@ -10,14 +10,21 @@ on:
   #workflow_dispatch:
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest    
     steps:
       - uses: actions/checkout@v3
+      - name: docker login
+        env:
+          Docker_User: ${{ .secrets.D_U  }}
+          Docker_Pass: ${{ .secrets.D_P }}
+        run: |
+          docker login -u $Docker_User -p Docker_Pass
+         
       - name: docker build python 
         run: |
          docker image build . -t localhost:5000/app-calc
-      - name: push docker image to private repo
+      - name: push docker image to private repo in docker hub
         run: |
-          docker push https://hub.docker.com/repository/docker/dockkcodewqrkd/python-calc-image/localhost:5000/app-calc
+          docker push python-calc-image/localhost:5000/app-calc
 
    
