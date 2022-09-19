@@ -13,12 +13,15 @@ jobs:
     runs-on: ubuntu-latest    
     steps:
       - uses: actions/checkout@v3
+      - name: docker logout
+        run: |
+          docker logout
       - name: docker login
         env:
           Docker_User: dockkcodewqrkd #${{ secrets.D_U  }}
           Docker_Pass: Nachorerammam@123 #${{ secrets.D_P }}
         run: |
-          docker login -u $Docker_User -p $Docker_Pass
+          sudo docker login -u $Docker_User -p $Docker_Pass
          
       - name: docker build python 
         run: |
