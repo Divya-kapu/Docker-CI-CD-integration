@@ -12,7 +12,11 @@ jobs:
   build:
     runs-on: ubuntu-latest    
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3   
+      - name: docker build python and tag the image to the docker hub repo
+        run: |
+         docker image build . -t python-calc-image
+         docker tag python-calc-image dockkcodewqrkd/python-calc-image
       - name: docker logout
         run: |
           docker logout
@@ -22,10 +26,6 @@ jobs:
           Docker_Pass: Nachorerammam@123 #${{ secrets.D_P }}
         run: |
           sudo docker login -u $Docker_User -p $Docker_Pass
-         
-      - name: docker build python 
-        run: |
-         docker image build . -t dockkcodewqrkd/python-calc-image/app-calc
       - name: push docker image to private repo in docker hub
         run: |
           sudo docker push dockkcodewqrkd/python-calc-image/app-calc
