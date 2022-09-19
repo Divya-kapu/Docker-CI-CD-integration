@@ -18,7 +18,7 @@ jobs:
           Docker_User: dockkcodewqrkd #${{ secrets.D_U  }}
           Docker_Pass: Nachorerammam@123 #${{ secrets.D_P }}
         run: |
-          docker login -u $Docker_User -p Docker_Pass
+          docker login -u $Docker_User -p $Docker_Pass
          
       - name: docker build python 
         run: |
