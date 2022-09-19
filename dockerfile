@@ -4,7 +4,7 @@ RUN mkdir /app/
 WORKDIR /app/
 
 COPY ./requirements.txt  /app/requirements.txt
-COPY ./acceleration-calc-test.py  /app/acceleration-calc-test.py
+COPY ./acceleration-calc.py  /app/acceleration-calc.py
 
 RUN pip3 install -r /app/requirements.txt
 
