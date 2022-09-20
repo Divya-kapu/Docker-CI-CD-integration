@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-calc-app
+spec:
+  selector:
+    matchLabels:
+      app: python-calc-app
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: python-calc-app
+    spec:
+      containers:
+        - name: python-calc-app
+          image: dockkcodewqrkd/python-calc-image 
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80 
+
+
+---
+
+apiVersion: v1 
+kind: Service 
+metadata: 
+  name: python-calc-app
+spec:
+  selector:
+    app: python-calc-app
+  ports:
+    - protocol: "TCP"
+      port: 1002 
+      targetPort: 80 
+  type: NodePort 
