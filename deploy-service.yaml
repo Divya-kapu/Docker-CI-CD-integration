@@ -25,7 +25,7 @@ spec:
 apiVersion: v1 
 kind: Service 
 metadata: 
-  name: python-calc-app-new
+  name: python-calc-app-svc-new
 spec:
   selector:
     app: python-calc-app
