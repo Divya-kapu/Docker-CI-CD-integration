@@ -1,0 +1,54 @@
+def COLOR_MAP = [
+    'SUCCESS': '#439FE0', 
+    'FAILURE': 'danger',
+]
+def getBuildUser() {
+    return currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()  /* get user who triggered the build */
+}
+pipeline {
+    agent any
+    environment {
+        dockercred=credentials('dockerlogin')
+    }
+    stages{
+        stage('Build docker image'){
+            steps{
+                script{
+                    sh 'docker build -t python-calc-image .'
+                    sh 'docker tag python-calc-image dockkcodewqrkd/python-calc-image'
+                }
+            }
+        }
+    
+        stage('Push image to Hub'){
+            steps{
+                script{
+                   /*withCredentials([usernameColonPassword(credentialsId: 'dockercred', variable: 'dockerlogin')]) {*/
+                   sh 'docker logout'
+                   /*sh 'docker login -u  -p '*/  /*${dockerlogin}*/
+                   sh 'echo $dockercred_PSW | docker login -u $dockercred_USR --password-stdin'
+
+                   }
+                   sh 'docker push dockkcodewqrkd/python-calc-image'
+                }
+            }
+        stage('Deploy to k8s'){
+            steps{
+                script{
+                   withCredentials([file(credentialsId: 'kubeconfig', variable: 'config')]) {
+                       sh 'kubectl apply -f deploy-service.yaml'
+        }
+       }
+      }
+     }
+    }
+    post {
+        always {
+            script {
+                BUILD_USER = getBuildUser()
+            }
+            slackSend channel: '#build-deploy',
+                color: COLOR_MAP[currentBuild.currentResult],
+                message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} by ${BUILD_USER}\n More info at: ${env.BUILD_URL}"
+        }
+    }
