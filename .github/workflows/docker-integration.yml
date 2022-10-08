@@ -22,8 +22,8 @@ jobs:
           docker logout
       - name: docker login
         env:
-          Docker_User: dockkcodewqrkd #${{ secrets.D_U  }}
-          Docker_Pass: Nachorerammam@123 #${{ secrets.D_P }}
+          Docker_User: ${{ secrets.D_U  }}
+          Docker_Pass: ${{ secrets.D_P }}
         run: |
           sudo docker login -u $Docker_User -p $Docker_Pass
       - name: push docker image to private repo in docker hub
