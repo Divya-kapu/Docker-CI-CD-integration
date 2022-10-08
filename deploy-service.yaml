@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: python-calc-app-test
+  name: python-calc-app-test1
 spec:
   selector:
     matchLabels:
@@ -25,7 +25,7 @@ spec:
 apiVersion: v1 
 kind: Service 
 metadata: 
-  name: python-calc-app-test
+  name: python-calc-app-test1
 spec:
   selector:
     app: python-calc-app
